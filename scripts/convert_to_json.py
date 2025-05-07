@@ -9,7 +9,7 @@ def convert_csv_to_json():
         'kwdb': df['kwdb/kwdb'].tolist(),
         'kwdb_comp_env': df['kwdb/kwdb_comp_env'].tolist()
     }
-    with open('data/stats.json', 'w') as f:
+    with open('docs/data/stats.json', 'w') as f:
         json.dump(result, f, indent=2)
 
 if __name__ == '__main__':
