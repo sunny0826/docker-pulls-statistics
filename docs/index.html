@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Docker Pulls Statistics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 80%; margin: 0 auto;">
+        <canvas id="pullsChart"></canvas>
+    </div>
+
+    <script>
+        fetch('data/stats.json')
+            .then(response => response.json())
+            .then(data => {
+                new Chart(document.getElementById('pullsChart'), {
+                    type: 'line',
+                    data: {
+                        labels: data.dates,
+                        datasets: [{
+                            label: 'kwdb/kwdb',
+                            data: data.kwdb,
+                            borderColor: 'rgb(255, 99, 132)',
+                            tension: 0.1
+                        }, {
+                            label: 'kwdb/kwdb_comp_env',
+                            data: data.kwdb_comp_env,
+                            borderColor: 'rgb(54, 162, 235)',
+                            tension: 0.1
+                        }]
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
