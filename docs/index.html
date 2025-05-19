@@ -6,7 +6,6 @@
 </head>
 <body>
     <div style="width: 80%; margin: 0 auto;">
-        <h2>Docker 镜像 Pull 次数趋势图</h2>
         <canvas id="pullsChart"></canvas>
     </div>
 
@@ -22,54 +21,13 @@
                             label: 'kwdb/kwdb',
                             data: data.kwdb,
                             borderColor: 'rgb(255, 99, 132)',
-                            tension: 0.3,  // 更平滑的曲线
-                            borderWidth: 2,
-                            pointRadius: 3,
-                            pointHoverRadius: 5
+                            tension: 0.1
                         }, {
                             label: 'kwdb/kwdb_comp_env',
                             data: data.kwdb_comp_env,
                             borderColor: 'rgb(54, 162, 235)',
-                            tension: 0.3,
-                            borderWidth: 2,
-                            pointRadius: 3,
-                            pointHoverRadius: 5
+                            tension: 0.1
                         }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: '日期',
-                                    font: { size: 14 }
-                                },
-                                grid: { drawBorder: false }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'Pull 次数',
-                                    font: { size: 14 }
-                                },
-                                beginAtZero: true,
-                                grid: { color: 'rgba(0, 0, 0, 0.05)' }
-                            }
-                        },
-                        plugins: {
-                            tooltip: {
-                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                                titleFont: { size: 14 },
-                                bodyFont: { size: 12 },
-                                footerFont: { size: 12 },
-                                callbacks: {
-                                    title: (context) => `日期: ${context[0].label}`
-                                }
-                            },
-                            legend: { position: 'top' }
-                        }
                     }
                 });
             });
