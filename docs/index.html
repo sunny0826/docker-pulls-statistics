@@ -28,6 +28,25 @@
                             borderColor: 'rgb(54, 162, 235)',
                             tension: 0.1
                         }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: { /* 标题配置保持不变 */ }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    display: false // 关闭Y轴网格线
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false // 关闭X轴网格线
+                                }
+                            }
+                        }
                     }
                 });
             });
