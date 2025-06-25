@@ -1,6 +1,8 @@
 {
   "scripts": {
     "capture": "node scripts/capture-chart.js",
+    "fetch": "python scripts/fetch_stats.py",
+    "convert": "python scripts/convert_to_json.py",
     "preview": "python3 -m http.server 8000 --directory docs/"
   },
   "dependencies": {
