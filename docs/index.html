@@ -27,12 +27,34 @@
                             data: data.kwdb_comp_env,
                             borderColor: 'rgb(54, 162, 235)',
                             tension: 0.1
+                        }, {
+                            label: 'kwdb/release',
+                            data: data.github_release_downloads,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1,
+                            borderDash: [5, 5] // 虚线样式区分
                         }]
                     },
                     options: {
                         responsive: true,
                         plugins: {
-                            title: { /* 标题配置保持不变 */ }
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.y !== null) {
+                                            label += new Intl.NumberFormat().format(context.parsed.y);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            },
+                            legend: {
+                                position: 'top',
+                            }
                         },
                         scales: {
                             y: {
