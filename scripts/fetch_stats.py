@@ -24,9 +24,22 @@ def get_docker_stats(image, max_retries=3, base_delay=1):
                 print(f'Failed to fetch {image} after {max_retries} attempts: {str(e)}')
                 return 0
 
+def get_last_valid_github_stats():
+    """从 CSV 中获取最近一次有效的 GitHub 下载数"""
+    if not os.path.isfile(DATA_PATH):
+        return None
+    with open(DATA_PATH, 'r') as f:
+        reader = csv.reader(f)
+        next(reader)  # 跳过表头
+        last_valid = None
+        for row in reader:
+            if len(row) >= 4 and row[3] and row[3] != '0':
+                last_valid = int(row[3])
+        return last_valid
+
 def get_github_release_stats(repo, max_retries=3, base_delay=1):
     url = f'https://api.github.com/repos/{repo}/releases'
-    
+
     for attempt in range(max_retries):
         try:
             response = requests.get(url, timeout=10)
@@ -56,6 +69,11 @@ def get_github_release_stats(repo, max_retries=3, base_delay=1):
                 time.sleep(delay)
             else:
                 print(f'Failed to fetch GitHub releases for {repo} after {max_retries} attempts: {str(e)}')
+                # 使用上次有效值
+                last_valid = get_last_valid_github_stats()
+                if last_valid is not None:
+                    print(f'Using last valid value: {last_valid}')
+                    return last_valid
                 return 0
         except Exception as e:
             if attempt < max_retries - 1:
@@ -64,6 +82,11 @@ def get_github_release_stats(repo, max_retries=3, base_delay=1):
                 time.sleep(delay)
             else:
                 print(f'Failed to fetch GitHub releases for {repo} after {max_retries} attempts: {str(e)}')
+                # 使用上次有效值
+                last_valid = get_last_valid_github_stats()
+                if last_valid is not None:
+                    print(f'Using last valid value: {last_valid}')
+                    return last_valid
                 return 0
 
 def save_data(data):
